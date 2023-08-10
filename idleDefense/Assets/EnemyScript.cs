@@ -5,10 +5,12 @@ using UnityEngine;
 public class EnemyScript : MonoBehaviour
 {
     public float Health;
-    public HealthBar script; 
+    public HealthBar script;
+    public int MoneyDrop;
 
     void Start()
     {
+        MoneyDrop = 1;
         Health = Random.Range(6, 12);
         script = GetComponentInChildren<HealthBar>();
         script.setMaxHealth(Health);
@@ -20,6 +22,7 @@ public class EnemyScript : MonoBehaviour
         {
             Destroy(transform.parent.gameObject);
             Spawn.currentSpawn -= 1;
+            
         }
 
         
