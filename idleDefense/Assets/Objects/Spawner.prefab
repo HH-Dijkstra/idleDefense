@@ -100,3 +100,4 @@ MonoBehaviour:
   enemy: {fileID: 7205642292321020678, guid: f8dda0c750aef4a4d9db4dfa40411295, type: 3}
   timer: 0
   heightOffset: 1
+  maxSpawn: 20

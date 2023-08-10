@@ -5,7 +5,7 @@ using UnityEngine;
 public class Spawn : MonoBehaviour
 {
     public GameObject enemy;
-    public static float spawnRate = 2;
+    public float spawnRate = 0.5f;
     public float timer = 0;
     public float heightOffset = 1;
     public float maxSpawn = 5;
