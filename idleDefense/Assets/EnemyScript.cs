@@ -22,7 +22,7 @@ public class EnemyScript : MonoBehaviour
         {
             Destroy(transform.parent.gameObject);
             Spawn.currentSpawn -= 1;
-            
+            StatsHandeler.playerMoney += MoneyDrop;
         }
 
         
@@ -31,9 +31,10 @@ public class EnemyScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D HeartDamage)
     {
         if (HeartDamage.transform.CompareTag("Heart"))
-        {
+        {   
             Destroy(transform.parent.gameObject);
-
+            Spawn.currentSpawn -= 1;
+            StatsHandeler.playerMoney -= MoneyDrop;
         }
     }
 }
