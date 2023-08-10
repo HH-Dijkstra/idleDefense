@@ -5,10 +5,12 @@ using UnityEngine;
 public class EnemyScript : MonoBehaviour
 {
     public float Health;
-    public HealthBar script; 
+    public HealthBar script;
+    public int MoneyDrop;
 
     void Start()
     {
+        MoneyDrop = 1;
         Health = Random.Range(6, 12);
         script = GetComponentInChildren<HealthBar>();
         script.setMaxHealth(Health);
@@ -20,6 +22,7 @@ public class EnemyScript : MonoBehaviour
         {
             Destroy(transform.parent.gameObject);
             Spawn.currentSpawn -= 1;
+            StatsHandeler.playerMoney += MoneyDrop;
         }
 
         
@@ -28,9 +31,10 @@ public class EnemyScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D HeartDamage)
     {
         if (HeartDamage.transform.CompareTag("Heart"))
-        {
+        {   
             Destroy(transform.parent.gameObject);
-
+            Spawn.currentSpawn -= 1;
+            StatsHandeler.playerMoney -= MoneyDrop;
         }
     }
 }
