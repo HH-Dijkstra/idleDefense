@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7205642290994523897}
   - component: {fileID: 7772923314594260458}
   - component: {fileID: 8849811576627507541}
-  - component: {fileID: 1001018831475954288}
+  - component: {fileID: 8402202714890757682}
   m_Layer: 8
   m_Name: Circle
   m_TagString: Enemy
@@ -125,7 +125,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1001018831475954288
+--- !u!114 &8402202714890757682
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,10 +134,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7205642290994523892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94b9b5a040302d7428680ae41aead7d4, type: 3}
+  m_Script: {fileID: 11500000, guid: bdb77a10b7ef8e84498b96c1b86291ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 6
+  Health: 0
+  script: {fileID: 0}
+  MoneyDrop: 0
 --- !u!1 &7205642292321020678
 GameObject:
   m_ObjectHideFlags: 0
