@@ -35,13 +35,11 @@ public class Tower : MonoBehaviour
         {
             if (timer > Speed)
             {
-                Debug.Log("padidapoopie");
                 shootBullet();
                 timer = 0;
             }
             else
             {
-                Debug.Log(timer.ToString());
                 timer += Time.deltaTime;
             }
             
@@ -70,7 +68,6 @@ public class Tower : MonoBehaviour
     {
         GameObject newBullet = Instantiate(Bullet, currentPos, transform.rotation);
         newBullet.transform.parent = transform;
-        Debug.Log("bless goes the bullet");
     }
 
     GameObject getLowestHealth(List<GameObject> TargetList)
