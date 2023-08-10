@@ -98,7 +98,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df344a12854cc874e8162cfe1e9bf6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 1
+  Range: 0
+  Damage: 0
+  Speed: 0.1
+  BulletSpeed: 0
+  Targets: 0
+  CritChance: 0
+  CritMulti: 0
   timer: 0
   currentPos: {x: 0, y: 0, z: 0}
   TowerObject: {fileID: 6777359239402102647}

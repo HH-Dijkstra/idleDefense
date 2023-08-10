@@ -15,22 +15,13 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyTarget == null && !ReferenceEquals(enemyTarget, null))
+        if (enemyTarget == null)
         {
             Destroy(gameObject);
         }
         else
         {
-            Vector3 currentPos = transform.position;
-            Vector3 enemyPos = enemyTarget.transform.position;
-            transform.position = Vector3.MoveTowards(currentPos, enemyPos, 5 * Time.deltaTime);
-
-            if (transform.position == enemyPos)
-            {
-                enemyTarget.GetComponent<EnemyScript>().Health -= GetComponentInParent<Tower>().Damage;
-                enemyTarget.GetComponentInChildren<HealthBar>().setHealth(enemyTarget.GetComponent<EnemyScript>().Health);
-                Destroy(gameObject);
-            }
+            moveBullet(enemyTarget);
         }
         
     }
@@ -58,5 +49,19 @@ public class BulletScript : MonoBehaviour
         return lowestHealthEnemy;
 
 
+    }
+
+    void moveBullet(GameObject enemyTarget)
+    {
+        Vector3 currentPos = transform.position;
+        Vector3 enemyPos = enemyTarget.transform.position;
+        transform.position = Vector3.MoveTowards(currentPos, enemyPos, 5 * Time.deltaTime);
+
+        if (transform.position == enemyPos)
+        {
+            enemyTarget.GetComponent<EnemyScript>().Health -= GetComponentInParent<Tower>().Damage;
+            enemyTarget.GetComponentInChildren<HealthBar>().setHealth(enemyTarget.GetComponent<EnemyScript>().Health);
+            Destroy(gameObject);
+        }
     }
 }
