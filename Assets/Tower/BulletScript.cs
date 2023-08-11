@@ -4,64 +4,62 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    GameObject enemyTarget;
+    // target is the object that the projectile is currently tracking
+    public GameObject target;
+
+    // Bullet stats
+    public float damage;
+    public float speed;
+    public float crit_chance;
+    public float crit_multi;
+
     // Start is called before the first frame update
     void Start()
     {
-        List<GameObject> TargetList = GetComponentInParent<Tower>().TargetList;
-        enemyTarget = getLowestHealth(TargetList);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (enemyTarget == null)
+        if (target == null)
         {
             Destroy(gameObject);
         }
         else
         {
-            moveBullet(enemyTarget);
+            moveBullet(target);
         }
-        
     }
 
-    GameObject getLowestHealth(List<GameObject> TargetList)
+    void moveBullet(GameObject target)
     {
+        Vector3 current_position = transform.position; // Current position of the bullet
+        Vector3 target_position = target.transform.position; // Current position of the target    
 
-        if (TargetList.Count == 0)
+        // Check if the bullet has reached the target position within a certain threshold
+        if (Vector3.Distance(current_position, target_position) < 0.1f)
         {
-            return null;
-        }
+            // Log the damage dealt
+            Debug.Log("bullet_pos == target_pos ");
 
-        float lowestHealth = Mathf.Infinity;
-        GameObject lowestHealthEnemy = null;
-        foreach (GameObject enemy in TargetList)
-        {
-            float Health = enemy.GetComponent<EnemyScript>().Health;
-            if (lowestHealth > Health)
-            {
-                lowestHealth = Health;
-                lowestHealthEnemy = enemy;
-            }
-        }
-        Debug.Log(lowestHealth.ToString());
-        return lowestHealthEnemy;
+            // Log enemy health
+            Debug.Log("Enemy health: " + target.GetComponent<EnemyScript>().health);
 
+            target.GetComponent<EnemyScript>().health -= damage; // Subtract the damage from the target's health
+            target.GetComponentInChildren<HealthBar>().setHealth(target.GetComponent<EnemyScript>().health); // Update the health bar
 
-    }
-
-    void moveBullet(GameObject enemyTarget)
-    {
-        Vector3 currentPos = transform.position;
-        Vector3 enemyPos = enemyTarget.transform.position;
-        transform.position = Vector3.MoveTowards(currentPos, enemyPos, 5 * Time.deltaTime);
-
-        if (transform.position == enemyPos)
-        {
-            enemyTarget.GetComponent<EnemyScript>().Health -= GetComponentInParent<Tower>().Damage;
-            enemyTarget.GetComponentInChildren<HealthBar>().setHealth(enemyTarget.GetComponent<EnemyScript>().Health);
+            // Destroy the bullet as it has reached the target
             Destroy(gameObject);
+        }
+        else
+        {
+            // Log the current position of the bullet
+            Debug.Log("Bullet position: " + current_position);
+            Debug.Log("Target position: " + target_position);
+
+            // Move the projectile towards the target with speed value
+            transform.position = Vector3.MoveTowards(current_position, target_position, (speed * Time.deltaTime));
         }
     }
 }
