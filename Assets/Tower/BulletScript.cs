@@ -22,17 +22,17 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (target == null)
+        if (target != null)
         {
-            Destroy(gameObject);
+            move(target);
         }
         else
         {
-            moveBullet(target);
+            Destroy(gameObject);
         }
     }
 
-    void moveBullet(GameObject target)
+    void move(GameObject target)
     {
         Vector3 current_position = transform.position; // Current position of the bullet
         Vector3 target_position = target.transform.position; // Current position of the target    
@@ -40,26 +40,33 @@ public class BulletScript : MonoBehaviour
         // Check if the bullet has reached the target position within a certain threshold
         if (Vector3.Distance(current_position, target_position) < 0.1f)
         {
-            // Log the damage dealt
-            Debug.Log("bullet_pos == target_pos ");
-
-            // Log enemy health
-            Debug.Log("Enemy health: " + target.GetComponent<EnemyScript>().health);
-
-            target.GetComponent<EnemyScript>().health -= damage; // Subtract the damage from the target's health
-            target.GetComponentInChildren<HealthBar>().setHealth(target.GetComponent<EnemyScript>().health); // Update the health bar
+            target.GetComponent<EnemyScript>().takeDamage(calculateDamage(damage, crit_chance, crit_multi)); // Subtract the damage from the target's health
 
             // Destroy the bullet as it has reached the target
             Destroy(gameObject);
         }
         else
         {
-            // Log the current position of the bullet
-            Debug.Log("Bullet position: " + current_position);
-            Debug.Log("Target position: " + target_position);
-
             // Move the projectile towards the target with speed value
             transform.position = Vector3.MoveTowards(current_position, target_position, (speed * Time.deltaTime));
+        }
+    }
+
+
+    float calculateDamage(float damage, float crit_chance, float crit_multi)
+    {
+        float crit = Random.Range(0.0f, 1.0f); // Generate a random number between 0 and 1
+
+        // Check if the crit is less than the crit chance
+        if (crit < crit_chance)
+        {
+            // Return the damage multiplied by the crit multiplier
+            return damage * crit_multi;
+        }
+        else
+        {
+            // Return the damage
+            return damage;
         }
     }
 }

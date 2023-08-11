@@ -76,10 +76,10 @@ public class Tower : MonoBehaviour
 
     GameObject acquireTarget(List<GameObject> target_list)
     {
+        // Check if target list is empty
         if (target_list.Count == 0)
-        {
             return null;
-        }
+
 
         float lowest_health = Mathf.Infinity;
         GameObject lowest_health_target = null;
@@ -87,24 +87,23 @@ public class Tower : MonoBehaviour
         foreach (GameObject target in target_list)
         {
             // Check if target is null
-            if (target != null)
-            {
-                bool marked_for_death = target.GetComponent<EnemyScript>().marked_for_death; // Get the marked for death status of the target
-                if (marked_for_death)
-                {
-                    // Log target marked for death
-                    Debug.Log("Target marked for death, continuing");
-                    continue;
-                }
+            if (target == null)
+                continue;
 
-                float health = target.GetComponent<EnemyScript>().health; // Get the health of the target
-                if (lowest_health > health)
-                {
-                    lowest_health = health;
-                    lowest_health_target = target;
-                }
+            // Check if target is marked for death
+            if (target.GetComponent<EnemyScript>().marked_for_death == true)
+                continue;
+
+
+            // Find target with the lowest health
+            float health = target.GetComponent<EnemyScript>().health;
+            if (lowest_health > health)
+            {
+                lowest_health = health;
+                lowest_health_target = target;
             }
         }
+
         return lowest_health_target;
     }
 

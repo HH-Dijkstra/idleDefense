@@ -7,7 +7,7 @@ public class EnemyScript : MonoBehaviour
 
     // Enemy stats
     public float health;
-    public HealthBar script;
+    public HealthBar health_bar;
     public int money_drop;
 
     public bool marked_for_death; // If the enemy is marked for death, the total amount of damage of projectiles en route is more than the enemy's health
@@ -19,24 +19,28 @@ public class EnemyScript : MonoBehaviour
         money_drop = 1;
 
         // Set the health bar, as a child of the enemy
-        script = GetComponentInChildren<HealthBar>();
-        script.setMaxHealth(health);
+        health_bar = GetComponentInChildren<HealthBar>();
+        health_bar.setMaxHealth(health);
 
         marked_for_death = false;
     }
 
     void Update()
     {
+        health_bar.setHealth(health);
+
         if (health <= 0)
         {
-            Destroy(transform.parent.gameObject);
             Spawn.currentSpawn -= 1;
             StatsHandeler.playerMoney += money_drop;
+            Destroy(transform.parent.gameObject);
         }
-
-        if (getIncomingDamage() >= health)
+        else
         {
-            marked_for_death = true; // If the total damage of projectiles en route is more than the our health, marked for death
+            if (getIncomingDamage() >= health) // Total damage incoming is more than the enemy's health
+            {
+                marked_for_death = true; // Enemy is marked for death
+            }
         }
     }
 
@@ -50,8 +54,18 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
+    public void takeDamage(float damage)
+    {
+        health -= damage;
+    }
+
     public float getIncomingDamage()
     {
+        if (incoming_projectiles.Count == 0)
+        {
+            return 0;
+        }
+
         float incoming_damage = 0;
 
         foreach (GameObject incoming_projectile in incoming_projectiles)
