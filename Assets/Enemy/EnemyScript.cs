@@ -29,18 +29,16 @@ public class EnemyScript : MonoBehaviour
     {
         health_bar.setHealth(health);
 
+
         if (health <= 0)
         {
             Spawn.currentSpawn -= 1;
             StatsHandeler.playerMoney += money_drop;
             Destroy(transform.parent.gameObject);
         }
-        else
+        else if (getIncomingDamage() >= health) // Total damage incoming is more than the enemy's health
         {
-            if (getIncomingDamage() >= health) // Total damage incoming is more than the enemy's health
-            {
-                marked_for_death = true; // Enemy is marked for death
-            }
+            marked_for_death = true; // Enemy is marked for death
         }
     }
 
@@ -62,14 +60,15 @@ public class EnemyScript : MonoBehaviour
     public float getIncomingDamage()
     {
         if (incoming_projectiles.Count == 0)
-        {
             return 0;
-        }
+
 
         float incoming_damage = 0;
 
         foreach (GameObject incoming_projectile in incoming_projectiles)
         {
+            if (incoming_projectile == null)
+                continue;
             incoming_damage += incoming_projectile.GetComponent<BulletScript>().damage;
         }
 

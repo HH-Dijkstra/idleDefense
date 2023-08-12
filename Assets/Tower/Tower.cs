@@ -79,11 +79,9 @@ public class Tower : MonoBehaviour
         {
             GameObject target = target_list[i];
 
-            // Check if target is marked for death
+            // Check if target is marked for death, if so remove it from the target list
             if (target.GetComponent<EnemyScript>().marked_for_death == true)
             {
-                // Log
-                Debug.Log("Target is marked for death, removed for target_list");
                 target_list.Remove(target);
                 continue;
             }
