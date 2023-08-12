@@ -41,12 +41,11 @@ public class Tower : MonoBehaviour
 
     void Update()
     {
-        if (targetAvailable(target_list)) // Check if the target list contains any valid targets
+        if (targetAvailable()) // Check if the target list contains any targets
         {
-            // Check if the tower has reloaded yet
-            if (timer < fire_rate)
+            if (timer < fire_rate) // Check if the tower has reloaded yet
             {
-                timer = timer + Time.deltaTime;
+                timer = timer + Time.deltaTime; // Increment the timer
             }
             else
             {
@@ -60,7 +59,6 @@ public class Tower : MonoBehaviour
         if (shoot.transform.CompareTag("Enemy"))
         {
             target_list.Add(shoot.gameObject);
-
         }
     }
 
@@ -72,29 +70,38 @@ public class Tower : MonoBehaviour
         }
     }
 
-    bool targetAvailable(List<GameObject> target_list) => target_list.Count > 0 ? true : false; // if target list is greater than 0 return true else return false
+    bool targetAvailable() => target_list.Count > 0 ? true : false; // if target list is greater than 0 return true else return false
 
-    GameObject acquireTarget(List<GameObject> target_list)
+    GameObject acquireTarget()
+    {
+        // Loop through the target list backwards, so that we can remove targets from the list without any indexing issues
+        for (int i = target_list.Count - 1; i >= 0; i--)
+        {
+            GameObject target = target_list[i];
+
+            // Check if target is marked for death
+            if (target.GetComponent<EnemyScript>().marked_for_death == true)
+            {
+                // Log
+                Debug.Log("Target is marked for death, removed for target_list");
+                target_list.Remove(target);
+                continue;
+            }
+        }
+
+        return findTargetLowestHealth(); // Find the target with the lowest health
+    }
+
+    GameObject findTargetLowestHealth()
     {
         // Check if target list is empty
         if (target_list.Count == 0)
             return null;
 
-
         float lowest_health = Mathf.Infinity;
         GameObject lowest_health_target = null;
-
         foreach (GameObject target in target_list)
         {
-            // Check if target is null
-            if (target == null)
-                continue;
-
-            // Check if target is marked for death
-            if (target.GetComponent<EnemyScript>().marked_for_death == true)
-                continue;
-
-
             // Find target with the lowest health
             float health = target.GetComponent<EnemyScript>().health;
             if (lowest_health > health)
@@ -103,21 +110,18 @@ public class Tower : MonoBehaviour
                 lowest_health_target = target;
             }
         }
-
         return lowest_health_target;
+
     }
 
     void shootBullet()
     {
         // Acquire a target
-        GameObject target = acquireTarget(target_list);
+        GameObject target = acquireTarget();
 
         // Check if the target is still alive
         if (target != null)
         {
-            // Log firing bullet
-            Debug.Log("Firing bullet");
-
             // Create a new projectile
             GameObject new_projectile = Instantiate(Bullet, position, transform.rotation);
 
