@@ -41,13 +41,14 @@ public class Tower : MonoBehaviour
 
     void Update()
     {
+        if (timer < fire_rate)
+        {
+            timer = timer + Time.deltaTime;
+        }
+
         if (targetAvailable()) // Check if the target list contains any targets
         {
-            if (timer < fire_rate) // Check if the tower has reloaded yet
-            {
-                timer = timer + Time.deltaTime; // Increment the timer
-            }
-            else
+            if (timer > fire_rate) // Check if the tower has reloaded yet
             {
                 shootBullet();
             }
