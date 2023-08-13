@@ -138,6 +138,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 6
+  script: {fileID: 0}
+  MoneyDrop: 0
 --- !u!1 &7205642292321020678
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +237,7 @@ MonoBehaviour:
     maximumInterval: 2
     visualizeSensitivity: 0
   canMove: 1
-  speed: 2
+  speed: 0.5
   orientation: 0
   enableRotation: 0
   rotationSpeed: 10

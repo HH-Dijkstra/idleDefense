@@ -97,3 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 216479a69762d27419505e736447eb42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 7205642292321020678, guid: f8dda0c750aef4a4d9db4dfa40411295, type: 3}
+  damage: 0
+  speed: 0
+  crit_chance: 0
+  crit_multi: 0
