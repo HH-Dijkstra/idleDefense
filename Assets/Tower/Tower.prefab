@@ -98,18 +98,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df344a12854cc874e8162cfe1e9bf6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tower_object: {fileID: 0}
-  projectile: {fileID: 0}
+  TowerObject: {fileID: 6777359239402102647}
+  Bullet: {fileID: 1390889381123264780, guid: 503ca678966973e458dd5b688e62b64b, type: 3}
   range: 5
-  fire_rate: 1
+  fire_rate: 0.1
   total_targets: 0
   position: {x: 0, y: 0, z: 0}
-  bullet_speed: 1
-  bullet_damage: 1
+  bullet_speed: 10
+  bullet_damage: 10
   bullet_crit_chance: 1
   bullet_crit_multi: 1
   target_list: []
-  projectile_list: []
   timer: 0
 --- !u!58 &58407576262998544
 CircleCollider2D:

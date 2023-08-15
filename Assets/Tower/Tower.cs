@@ -29,9 +29,9 @@ public class Tower : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        range = 20.0f;
-        bullet_damage = 3.0f;
-        bullet_speed = 1.0f;
+        range = 5.0f;
+        bullet_damage = 10.0f;
+        bullet_speed = 10.0f;
 
         CircleCollider2D tower_radius = TowerObject.GetComponent<CircleCollider2D>();
         tower_radius.radius = range;
